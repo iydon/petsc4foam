@@ -1,0 +1,6 @@
+[submodule "part/solution-for-managing-petsc-installations/iPETSc"]
+	path = part/solution-for-managing-petsc-installations/iPETSc
+	url = https://github.com/iydon/iPETSc
+[submodule "part/solution-for-managing-petsc-installations/solver_challenge"]
+	path = part/solution-for-managing-petsc-installations/solver_challenge
+	url = https://gitlab.com/Iydon/solver_challenge
