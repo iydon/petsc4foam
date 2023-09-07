@@ -1,0 +1,5 @@
+# global
+__pycache__/
+
+# local
+/part/openfoamcom-or-openfoamorg/cache/
