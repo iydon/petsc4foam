@@ -17,13 +17,19 @@
 
 
 <!-- TABLE OF CONTENTS -->
-<details>
+<details open>
   <summary>Table of Contents</summary>
   <ol>
     <li><a href="#openfoamcom-or-openfoamorg">OpenFOAM.com or OpenFOAM.org</a></li>
     <li><a href="#solution-for-managing-petsc-installations">Solution for Managing PETSc Installations</a></li>
     <li><a href="#installation-of-petsc4foam">Installation of PETSc4FOAM</a></li>
     <li><a href="#test-for-petsc4foam">Test for PETSc4FOAM</a></li>
+    <li>
+      <a href="#hyper-parameter-optimization">Hyper-parameter Optimization</a>
+      <ul>
+        <li><a href="#training-dataset">Training Dataset</a></li>
+      </ul>
+    </li>
     <li><a href="#references">References</a></li>
   </ol>
 </details>
@@ -129,7 +135,9 @@ We have provided an example installation of PETSc4FOAM using Docker with the con
 
 ## Test for PETSc4FOAM
 
-We use [OpenFOAM-v2106](https://develop.openfoam.com/Development/openfoam/-/tree/OpenFOAM-v2106) to test the performance of the [PETSc4FOAM](https://develop.openfoam.com/modules/external-solver) implementation. The test set comes from cases that can run locally for less than 300 seconds, and is taken in parallel if it can be, otherwise it defaults to serial. The PETSc solving algorithm hyper-parameters are left empty, i.e., the default values are selected. The collapsed table below shows the results of the test set.
+<!-- TODO: Select a tutorial to speed up by adjusting the hyper-parameters of the PETSc solving algorithm. -->
+
+We use [OpenFOAM-v2106](https://develop.openfoam.com/Development/openfoam/-/tree/OpenFOAM-v2106) to test the performance of the [PETSc4FOAM](https://develop.openfoam.com/modules/external-solver) implementation. The test set comes from tutorials that can run locally for less than 300 seconds, and is taken in parallel if it can be, otherwise it defaults to serial. The PETSc solving algorithm hyper-parameters are left empty, i.e., the default values are selected. The collapsed table below shows the results of the test set.
 
 <details>
   <summary>Test Results</summary>
@@ -212,6 +220,14 @@ We can see that in most cases PETSc with the default hyper-parameters does not p
 | compressibleInterIsoFoam | multiphase/compressibleInterIsoFoam/laminar/depthCharge2D  | False       | 67.6197   | 57.8889    | 0.856095   |
 | pisoFoam                 | incompressible/pisoFoam/RAS/cavity                         | True        |  9.86059  |  6.46813   | 0.655958   |
 | dsmcFoam                 | discreteMethods/dsmcFoam/freeSpacePeriodic                 | False       | 33.9859   | 32.2858    | 0.949977   |
+
+
+
+## Hyper-parameter Optimization
+
+### Training Dataset
+
+pass
 
 
 
