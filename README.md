@@ -22,6 +22,7 @@
   <ol>
     <li><a href="#openfoamcom-or-openfoamorg">OpenFOAM.com or OpenFOAM.org</a></li>
     <li><a href="#solution-for-managing-petsc-installations">Solution for Managing PETSc Installations</a></li>
+    <li><a href="#installation-of-petsc4foam">Installation of PETSc4FOAM</a></li>
     <li><a href="#references">References</a></li>
   </ol>
 </details>
@@ -117,9 +118,19 @@ $ ls --all src/prob_real/
 
 
 
+## Installation of PETSc4FOAM
+
+PETSc4FOAM is a library that plug-in PETSc into the OpenFOAM framework[^5], OpenFOAM.com implements a version with limitations, such as not supporting certain boundary conditions[^6].
+
+We have provided an example installation of PETSc4FOAM using Docker with the configuration file [petsc4foam.dockerfile](part/installation-of-petsc4foam/petsc4foam.dockerfile), we have not provided a test case and do not guarantee that it will still work now.
+
+
+
 ## References
 
 [^1]: https://www.cfd-online.com/Forums/openfoam/197150-openfoam-com-versus-openfoam-org-version-use.html
 [^2]: https://seaborn.pydata.org/generated/seaborn.boxenplot.html
 [^3]: https://gitlab.com/Iydon/solver_challenge
 [^4]: https://github.com/iydon/iPETSc
+[^5]: https://www.semanticscholar.org/paper/PETSc4FOAM%3A-a-library-to-plug-in-PETSc-into-the-Bn%C3%A0-Spisso/0234a490ba9a3647a5ed4f35bee9a70f07cb2e49
+[^6]: https://develop.openfoam.com/modules/external-solver
