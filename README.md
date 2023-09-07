@@ -54,7 +54,9 @@ Figures [1](#figure-1.1) and [2](#figure-1.2) represent the distribution of tuto
 
 
 
-## Solution for Managing PETSc Installations[^3][^4]
+## Solution for Managing PETSc Installations
+
+TL;DR: Our solution for managing PETSc installations[^3][^4]
 
 Some matrices contain complex numbers, and the PETSc library needs to modify configuration options to conditionally compile a version that supports real or complex numbers; at the same time, local debugging needs to disable the optimization flag to compile a version that contains debuggable code, while HPC needs to enable the optimization flag to speed up the target code.
 
