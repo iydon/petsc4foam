@@ -1,7 +1,8 @@
 MAKE = make
+PYTHON = python3
 
 
-.PHONY: help openfoamcom-or-openfoamorg
+.PHONY: help openfoamcom-or-openfoamorg test-for-petsc4foam
 
 
 help:                        ## Print the usage
@@ -9,3 +10,6 @@ help:                        ## Print the usage
 
 openfoamcom-or-openfoamorg:  ## OpenFOAM.com or OpenFOAM.org
 	@cd part/$@/ && $(MAKE)
+
+test-for-petsc4foam:         ## Test for PETSc4FOAM
+	@cd part/$@/ && $(PYTHON) main.py
