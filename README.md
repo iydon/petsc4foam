@@ -23,6 +23,7 @@
     <li><a href="#openfoamcom-or-openfoamorg">OpenFOAM.com or OpenFOAM.org</a></li>
     <li><a href="#solution-for-managing-petsc-installations">Solution for Managing PETSc Installations</a></li>
     <li><a href="#installation-of-petsc4foam">Installation of PETSc4FOAM</a></li>
+    <li><a href="#test-for-petsc4foam">Test for PETSc4FOAM</a></li>
     <li><a href="#references">References</a></li>
   </ol>
 </details>
@@ -123,6 +124,94 @@ $ ls --all src/prob_real/
 PETSc4FOAM is a library that plug-in PETSc into the OpenFOAM framework[^5], OpenFOAM.com implements a version with limitations, such as not supporting certain boundary conditions[^6].
 
 We have provided an example installation of PETSc4FOAM using Docker with the configuration file [petsc4foam.dockerfile](part/installation-of-petsc4foam/petsc4foam.dockerfile), we have not provided a test case and do not guarantee that it will still work now.
+
+
+
+## Test for PETSc4FOAM
+
+We use [OpenFOAM-v2106](https://develop.openfoam.com/Development/openfoam/-/tree/OpenFOAM-v2106) to test the performance of the [PETSc4FOAM](https://develop.openfoam.com/modules/external-solver) implementation. The test set comes from cases that can run locally for less than 300 seconds, and is taken in parallel if it can be, otherwise it defaults to serial. The PETSc solving algorithm hyper-parameters are left empty, i.e., the default values are selected. The collapsed table below shows the results of the test set.
+
+<details>
+  <summary>Test Results</summary>
+
+| application                      | tutorial                                                                | is_parallel   |   time_foam |   time_petsc |   petsc/foam |
+|:---------------------------------|:------------------------------------------------------------------------|:--------------|------------:|-------------:|-------------:|
+| liquidFilmFoam                   | finiteArea/liquidFilmFoam/cylinder                                      | True          |  54.5962    |    74.5738   |     1.36591  |
+| PDRFoam                          | combustion/PDRFoam/flamePropagationWithObstacles                        | False         | 126.312     |   208.068    |     1.64726  |
+| fireFoam                         | combustion/fireFoam/LES/flameSpreadWaterSuppressionPanel                | False         |  62.0199    |    82.2087   |     1.32552  |
+| fireFoam                         | combustion/fireFoam/LES/simplePMMApanel                                 | False         |   4.64767   |     4.54882  |     0.978731 |
+| compressibleInterDyMFoam         | multiphase/compressibleInterDyMFoam/laminar/sloshingTank2D              | False         |  42.1959    |    38.6318   |     0.915535 |
+| reactingTwoPhaseEulerFoam        | multiphase/reactingTwoPhaseEulerFoam/laminar/injection                  | False         |  40.289     |    49.8847   |     1.23817  |
+| reactingTwoPhaseEulerFoam        | multiphase/reactingTwoPhaseEulerFoam/laminar/steamInjection             | False         | 274.909     |   459.745    |     1.67235  |
+| icoReactingMultiphaseInterFoam   | multiphase/icoReactingMultiPhaseInterFoam/evaporationMultiComponent     | False         | 232.445     |   751.688    |     3.23384  |
+| icoReactingMultiphaseInterFoam   | multiphase/icoReactingMultiPhaseInterFoam/inertMultiphaseMultiComponent | False         |  68.1879    |   104.234    |     1.52862  |
+| twoPhaseEulerFoam                | multiphase/twoPhaseEulerFoam/laminar/injection                          | False         |  35.6297    |    46.6352   |     1.30889  |
+| interIsoFoam                     | multiphase/interIsoFoam/notchedDiscInSolidBodyRotation                  | False         |   7.07395   |     7.06355  |     0.998529 |
+| interIsoFoam                     | multiphase/interIsoFoam/weirOverflow                                    | False         |  13.9652    |   404.528    |    28.9669   |
+| interIsoFoam                     | multiphase/interIsoFoam/discInReversedVortexFlow                        | False         |  83.1104    |    82.4318   |     0.991834 |
+| interIsoFoam                     | multiphase/interIsoFoam/discInConstantFlow                              | False         |   0.796971  |     0.785794 |     0.985976 |
+| interIsoFoam                     | multiphase/interIsoFoam/discInConstantFlowCyclicBCs                     | False         |   0.72161   |     0.719718 |     0.997378 |
+| interCondensatingEvaporatingFoam | multiphase/interCondensatingEvaporatingFoam/condensatingVessel          | False         |  75.4212    |   207.477    |     2.75091  |
+| multiphaseInterFoam              | multiphase/multiphaseInterFoam/laminar/damBreak4phase                   | False         |  32.8729    |    64.1778   |     1.9523   |
+| interFoam                        | multiphase/interFoam/laminar/damBreakPermeable                          | False         |   2.37643   |    57.4663   |    24.1818   |
+| interFoam                        | multiphase/interFoam/laminar/testTubeMixer                              | False         |  17.4256    |    45.6418   |     2.61924  |
+| interFoam                        | multiphase/interFoam/laminar/damBreak/damBreak                          | False         |   3.30486   |    55.41     |    16.7662   |
+| interFoam                        | multiphase/interFoam/RAS/damBreak/damBreak                              | False         |   2.25597   |    42.0251   |    18.6284   |
+| compressibleInterFoam            | multiphase/compressibleInterFoam/laminar/depthCharge2D                  | False         |  38.0536    |    39.2199   |     1.03065  |
+| compressibleMultiphaseInterFoam  | multiphase/compressibleMultiphaseInterFoam/laminar/damBreak4phase       | False         |  46.114     |    48.1891   |     1.045    |
+| twoLiquidMixingFoam              | multiphase/twoLiquidMixingFoam/lockExchange                             | False         |  21.9684    |   343.478    |    15.6351   |
+| compressibleInterIsoFoam         | multiphase/compressibleInterIsoFoam/laminar/depthCharge2D               | False         |  67.6197    |    57.8889   |     0.856095 |
+| multiphaseEulerFoam              | multiphase/multiphaseEulerFoam/damBreak4phase                           | False         | 170.796     |   174.722    |     1.02299  |
+| multiphaseEulerFoam              | multiphase/multiphaseEulerFoam/bubbleColumn                             | False         | 135.974     |   202.502    |     1.48927  |
+| potentialFreeSurfaceFoam         | multiphase/potentialFreeSurfaceFoam/oscillatingBox                      | False         |  18.892     |    49.3371   |     2.61154  |
+| rhoSimpleFoam                    | compressible/rhoSimpleFoam/angledDuctExplicitFixedCoeff                 | False         |  19.6578    |   405.014    |    20.6032   |
+| rhoCentralFoam                   | compressible/rhoCentralFoam/shockTube                                   | False         |   0.0942714 |     0.303647 |     3.22099  |
+| rhoCentralFoam                   | compressible/rhoCentralFoam/LadenburgJet60psi                           | False         |  23.3061    |    28.3209   |     1.21517  |
+| rhoPimpleFoam                    | compressible/rhoPimpleFoam/laminar/sineWaveDamping                      | False         |  61.836     |    77.0334   |     1.24577  |
+| rhoPimpleFoam                    | compressible/rhoPimpleFoam/RAS/angledDuctLTS                            | False         |  14.9777    |    27.1883   |     1.81526  |
+| rhoPimpleFoam                    | compressible/rhoPimpleFoam/RAS/mixerVessel2D                            | False         |   8.79051   |    14.2535   |     1.62146  |
+| sonicFoam                        | compressible/sonicFoam/laminar/shockTube                                | False         |   1.20951   |     1.77627  |     1.46859  |
+| coalChemistryFoam                | lagrangian/coalChemistryFoam/simplifiedSiwek                            | True          |  18.605     |    20.5423   |     1.10412  |
+| reactingParcelFoam               | lagrangian/reactingParcelFoam/verticalChannelLTS                        | False         | 169.547     |   273.891    |     1.61543  |
+| reactingParcelFoam               | lagrangian/reactingParcelFoam/recycleParticles                          | True          |   2.64601   |     3.0002   |     1.13386  |
+| reactingParcelFoam               | lagrangian/reactingParcelFoam/parcelInBox                               | False         |   0.945285  |     1.46008  |     1.54459  |
+| reactingParcelFoam               | lagrangian/reactingParcelFoam/filter                                    | True          |  17.2056    |    22.1532   |     1.28756  |
+| simpleReactingParcelFoam         | lagrangian/simpleReactingParcelFoam/verticalChannel                     | True          |  79.7074    |   139.06     |     1.74463  |
+| shallowWaterFoam                 | incompressible/shallowWaterFoam/squareBump                              | False         |   1.68878   |     2.65668  |     1.57314  |
+| pisoFoam                         | incompressible/pisoFoam/RAS/cavity                                      | True          |   9.86059   |     6.46813  |     0.655958 |
+| icoFoam                          | incompressible/icoFoam/cavityMappingTest                                | True          |   0.512954  |     0.536315 |     1.04554  |
+| icoFoam                          | incompressible/icoFoam/elbow                                            | False         |   0.440706  |    11.3589   |    25.7743   |
+| simpleFoam                       | incompressible/simpleFoam/backwardFacingStep2D                          | False         |  45.1615    |  1106.76     |    24.5067   |
+| simpleFoam                       | incompressible/simpleFoam/mixerVessel2D                                 | False         |   1.59308   |    30.9162   |    19.4065   |
+| simpleFoam                       | incompressible/simpleFoam/simpleCar                                     | False         |   2.63694   |   155.473    |    58.9596   |
+| SRFPimpleFoam                    | incompressible/SRFPimpleFoam/rotor2D                                    | False         |  52.5763    |  1445        |    27.4838   |
+| pimpleFoam                       | incompressible/pimpleFoam/RAS/TJunctionFan                              | False         |  23.7639    |   326.105    |    13.7227   |
+| solidDisplacementFoam            | stressAnalysis/solidDisplacementFoam/plateHole                          | False         |   0.0917768 |     0.490052 |     5.33961  |
+| buoyantBoussinesqSimpleFoam      | heatTransfer/buoyantBoussinesqSimpleFoam/hotRoom                        | False         |   5.66248   |    20.2273   |     3.57216  |
+| buoyantPimpleFoam                | heatTransfer/buoyantPimpleFoam/hotRoom                                  | False         |   9.91152   |    23.6746   |     2.38859  |
+| buoyantPimpleFoam                | heatTransfer/buoyantPimpleFoam/thermocoupleTestCase                     | False         |  44.9003    |    71.4351   |     1.59097  |
+| buoyantBoussinesqPimpleFoam      | heatTransfer/buoyantBoussinesqPimpleFoam/hotRoom                        | False         |   6.62563   |   200.328    |    30.2353   |
+| dsmcFoam                         | discreteMethods/dsmcFoam/freeSpacePeriodic                              | False         |  33.9859    |    32.2858   |     0.949977 |
+| scalarTransportFoam              | verificationAndValidation/schemes/divergenceExample                     | False         |   4.3484    |    11.4358   |     2.62989  |
+| potentialFoam                    | basic/potentialFoam/pitzDaily                                           | False         |   0.104949  |     0.701211 |     6.68143  |
+| potentialFoam                    | basic/potentialFoam/cylinder                                            | False         |   0.0411849 |     0.584342 |    14.1882   |
+| laplacianFoam                    | basic/laplacianFoam/flange                                              | True          |   1.10576   |     1.85954  |     1.68169  |
+| dnsFoam                          | DNS/dnsFoam/boxTurb16                                                   | False         |   3.31527   |    96.3216   |    29.054    |
+</details>
+
+We can see that in most cases PETSc with the default hyper-parameters does not perform as well as the OpenFOAM native implementation, and the following results are exceptional without excluding errors.
+
+| application              | tutorial                                                   | is_parallel | time_foam | time_petsc | petsc/foam |
+|:-------------------------|:-----------------------------------------------------------|:------------|----------:|-----------:|-----------:|
+| fireFoam                 | combustion/fireFoam/LES/simplePMMApanel                    | False       |  4.64767  |  4.54882   | 0.978731   |
+| compressibleInterDyMFoam | multiphase/compressibleInterDyMFoam/laminar/sloshingTank2D | False       | 42.1959   | 38.6318    | 0.915535   |
+| interIsoFoam             | multiphase/interIsoFoam/notchedDiscInSolidBodyRotation     | False       |  7.07395  |  7.06355   | 0.998529   |
+| interIsoFoam             | multiphase/interIsoFoam/discInReversedVortexFlow           | False       | 83.1104   | 82.4318    | 0.991834   |
+| interIsoFoam             | multiphase/interIsoFoam/discInConstantFlow                 | False       |  0.796971 |  0.785794  | 0.985976   |
+| interIsoFoam             | multiphase/interIsoFoam/discInConstantFlowCyclicBCs        | False       |  0.72161  |  0.719718  | 0.997378   |
+| compressibleInterIsoFoam | multiphase/compressibleInterIsoFoam/laminar/depthCharge2D  | False       | 67.6197   | 57.8889    | 0.856095   |
+| pisoFoam                 | incompressible/pisoFoam/RAS/cavity                         | True        |  9.86059  |  6.46813   | 0.655958   |
+| dsmcFoam                 | discreteMethods/dsmcFoam/freeSpacePeriodic                 | False       | 33.9859   | 32.2858    | 0.949977   |
 
 
 
