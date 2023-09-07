@@ -3,3 +3,4 @@ __pycache__/
 
 # local
 /part/openfoamcom-or-openfoamorg/cache/
+/part/test-for-petsc4foam/cache/
