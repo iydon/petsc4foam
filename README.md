@@ -42,12 +42,12 @@ $$
 Figures [1](#figure-1.1) and [2](#figure-1.2) represent the distribution of tutorial compatibility between different versions of OpenFOAM, with the horizontal coordinate representing the different versions of OpenFOAM and the vertical coordinate representing the tutorial compatibility[^2]. It can be seen that the tutorial compatibility of OpenFOAM.com is better than that of OpenFOAM.org, and therefore we use OpenFOAM.com to avoid compatibility issues as much as possible.
 
 <figure id="figure-1.1">
-  <img src="part/openfoamcom-or-openfoamorg/static/figure/com.jpg" />
+  <img id="figure-1.1" src="part/openfoamcom-or-openfoamorg/static/figure/com.jpg" />
   <figcaption>Figure 1.1: OpenFOAM.com</figcaption>
 </figure>
 
 <figure id="figure-1.2">
-  <img src="part/openfoamcom-or-openfoamorg/static/figure/org.jpg" />
+  <img id="figure-1.2" src="part/openfoamcom-or-openfoamorg/static/figure/org.jpg" />
   <figcaption>Figure 1.2: OpenFOAM.org</figcaption>
 </figure>
 
