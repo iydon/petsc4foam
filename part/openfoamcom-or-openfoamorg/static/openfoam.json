@@ -1,0 +1,36 @@
+{
+
+    "com": [
+        ["v1606", "https://master.dl.sourceforge.net/project/openfoam/v1606%2B/OpenFOAM-v1606%2B.tgz?viasf=1"],
+        ["v1612", "https://master.dl.sourceforge.net/project/openfoam/v1612%2B/OpenFOAM-v1612%2B.tgz?viasf=1"],
+        ["v1706", "https://master.dl.sourceforge.net/project/openfoam/v1806/OpenFOAM-v1806.tgz?viasf=1"],
+        ["v1712", "https://master.dl.sourceforge.net/project/openfoam/v1712/OpenFOAM-v1712.tgz?viasf=1"],
+        ["v1806", "https://master.dl.sourceforge.net/project/openfoam/v1806/OpenFOAM-v1806.tgz?viasf=1"],
+        ["v1812", "https://master.dl.sourceforge.net/project/openfoam/v1812/OpenFOAM-v1812.tgz?viasf=1"],
+        ["v1906", "https://master.dl.sourceforge.net/project/openfoam/v1906/OpenFOAM-v1906.tgz?viasf=1"],
+        ["v1912", "https://master.dl.sourceforge.net/project/openfoam/v1912/OpenFOAM-v1912.tgz?viasf=1"],
+        ["v2006", "https://master.dl.sourceforge.net/project/openfoam/v2006/OpenFOAM-v2006.tgz?viasf=1"],
+        ["v2012", "https://master.dl.sourceforge.net/project/openfoam/v2012/OpenFOAM-v2012.tgz?viasf=1"],
+        ["v2106", "https://master.dl.sourceforge.net/project/openfoam/v2106/OpenFOAM-v2106.tgz?viasf=1"],
+        ["v2112", "https://master.dl.sourceforge.net/project/openfoam/v2112/OpenFOAM-v2112.tgz?viasf=1"],
+        ["v2206", "https://master.dl.sourceforge.net/project/openfoam/v2206/OpenFOAM-v2206.tgz?viasf=1"],
+        ["v2212", "https://master.dl.sourceforge.net/project/openfoam/v2212/OpenFOAM-v2212.tgz?viasf=1"],
+        ["v2306", "https://master.dl.sourceforge.net/project/openfoam/v2306/OpenFOAM-v2306.tgz?viasf=1"]
+    ],
+    "org": [
+        ["2.0.x", "https://github.com/OpenFOAM/OpenFOAM-2.0.x/archive/refs/heads/master.zip"],
+        ["2.1.x", "https://github.com/OpenFOAM/OpenFOAM-2.1.x/archive/refs/heads/master.zip"],
+        ["2.2.x", "https://github.com/OpenFOAM/OpenFOAM-2.2.x/archive/refs/heads/master.zip"],
+        ["2.3.x", "https://github.com/OpenFOAM/OpenFOAM-2.3.x/archive/refs/heads/master.zip"],
+        ["2.4.x", "https://github.com/OpenFOAM/OpenFOAM-2.4.x/archive/refs/heads/master.zip"],
+        ["3.0.x", "https://github.com/OpenFOAM/OpenFOAM-3.0.x/archive/refs/heads/master.zip"],
+        ["4.x", "https://github.com/OpenFOAM/OpenFOAM-4.x/archive/refs/heads/master.zip"],
+        ["5.x", "https://github.com/OpenFOAM/OpenFOAM-5.x/archive/refs/heads/master.zip"],
+        ["6", "https://github.com/OpenFOAM/OpenFOAM-6/archive/refs/heads/master.zip"],
+        ["7", "https://github.com/OpenFOAM/OpenFOAM-7/archive/refs/heads/master.zip"],
+        ["8", "https://github.com/OpenFOAM/OpenFOAM-8/archive/refs/heads/master.zip"],
+        ["9", "https://github.com/OpenFOAM/OpenFOAM-9/archive/refs/heads/master.zip"],
+        ["10", "https://github.com/OpenFOAM/OpenFOAM-10/archive/refs/heads/master.zip"],
+        ["11", "https://github.com/OpenFOAM/OpenFOAM-11/archive/refs/heads/master.zip"]
+    ]
+}
