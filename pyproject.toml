@@ -7,7 +7,7 @@ license = "GPL-3.0-only"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "~3.9"
 
 
 [tool.poetry.group.openfoamcom-or-openfoamorg.dependencies]
@@ -16,6 +16,16 @@ seaborn = "^0.12.2"
 
 
 [tool.poetry.group.test-for-petsc4foam.dependencies]
+tqdm = "^4.66.1"
+typing-extensions = "^4.7.1"
+
+
+[tool.poetry.group.hyper-parameter-optimization.dependencies]
+beautifulsoup4 = "^4.12.2"
+click = "^8.1.7"
+matplotlib = "^3.7.2"
+requests = "^2.31.0"
+scipy = "^1.11.2"
 tqdm = "^4.66.1"
 typing-extensions = "^4.7.1"
 
