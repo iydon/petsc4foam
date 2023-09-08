@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "petsc4foam"
+version = "2023.8"
+description = "Speed Up OpenFOAM Framework with PETSc Library (experimental)"
+authors = ["Iydon Liang <liangiydon@gmail.com>"]
+license = "GPL-3.0-only"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+
+[tool.poetry.group.openfoamcom-or-openfoamorg.dependencies]
+matplotlib = "^3.7.2"
+seaborn = "^0.12.2"
+
+
+[tool.poetry.group.test-for-petsc4foam.dependencies]
+tqdm = "^4.66.1"
+typing-extensions = "^4.7.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
