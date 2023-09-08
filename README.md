@@ -48,7 +48,7 @@ $$
 C_t = \frac{n_a + n_d}{2n_0 + n_a - n_d}
 $$
 
-Figures [1](#figure-1.1) and [2](#figure-1.2) represent the distribution of tutorial compatibility between different versions of OpenFOAM, with the horizontal coordinate representing the different versions of OpenFOAM and the vertical coordinate representing the tutorial compatibility[^2]. It can be seen that the tutorial compatibility of OpenFOAM.com is better than that of OpenFOAM.org, and therefore we use OpenFOAM.com to avoid compatibility issues as much as possible.
+Figure [1.1](#figure-1.1) and [1.2](#figure-1.2) represent the distribution of tutorial compatibility between different versions of OpenFOAM, with the horizontal coordinate representing the different versions of OpenFOAM and the vertical coordinate representing the tutorial compatibility[^2]. It can be seen that the tutorial compatibility of OpenFOAM.com is better than that of OpenFOAM.org, and therefore we use OpenFOAM.com to avoid compatibility issues as much as possible.
 
 <figure id="figure-1.1">
   <img id="figure-1.1" src="part/openfoamcom-or-openfoamorg/static/figure/com.jpg" />
@@ -137,7 +137,7 @@ We have provided an example installation of PETSc4FOAM using Docker with the con
 
 <!-- TODO: Select a tutorial to speed up by adjusting the hyper-parameters of the PETSc solving algorithm. -->
 
-We use [OpenFOAM-v2106](https://develop.openfoam.com/Development/openfoam/-/tree/OpenFOAM-v2106) to test the performance of the [PETSc4FOAM](https://develop.openfoam.com/modules/external-solver) implementation. The test set comes from tutorials that can run locally for less than 300 seconds, and is taken in parallel if it can be, otherwise it defaults to serial. The PETSc solving algorithm hyper-parameters are left empty, i.e., the default values are selected. The collapsed table below shows the results of the test set.
+We use OpenFOAM-v2106 to test the performance of the PETSc4FOAM implementation. The test set comes from tutorials that can run locally for less than 300 seconds, and is taken in parallel if it can be, otherwise it defaults to serial. The PETSc solving algorithm hyper-parameters are left empty, i.e., the default values are selected. The collapsed table below shows the results of the test set.
 
 <details>
   <summary>Test Results</summary>
@@ -227,7 +227,24 @@ We can see that in most cases PETSc with the default hyper-parameters does not p
 
 ### Training Dataset
 
-pass
+To optimize the hyper-parameters, we find the sparse matrix dataset SuiteSparse Matrix Collection[^7], but upon visualization, we find that many of the sparse matrices are from non-CFD domains and could not be solved as linear systems. As in Figure [5.1.1](#figure-5.1.1), certain sparse matrices are visualized, with black representing zero elements and white representing non-zero elements.
+
+<figure id="figure-5.1.1">
+  <img id="figure-5.1.1" src="part/hyper-parameter-optimization/training-dataset/static/suite_sparse.png" />
+  <figcaption>Figure 5.1.1: Sparsity Pattern of Certain Matrices in SuiteSparse Matrix Collection</figcaption>
+</figure>
+
+The available training dataset is too small, we come up with an idea to dump sparse matrices from the OpenFOAM tutorial for constructing the training dataset. Therefore, we plug-in OpenFOAM to implement this idea. We have implemented the function to dump OpenFOAM lduMatrix to matrix market format, which does not yet take into account of certain boundary conditions, but is sufficient as a training dataset. Figure [5.1.2](#figure-5.1.2) shows the mixing elbow case that comes with the icoFoam solver, and Figure [5.1.3](#figure-5.1.3) shows a visualization of the dumped $U_x$ matrix at the first time step.
+
+<figure id="figure-5.1.2">
+  <img id="figure-5.1.2" src="https://github.com/iydon/foam2mtx/raw/master/test/elbow.out/img/paraview.png" />
+  <figcaption>Figure 5.1.2</figcaption>
+</figure>
+
+<figure id="figure-5.1.3">
+  <img id="figure-5.1.3" src="https://github.com/iydon/foam2mtx/raw/master/test/elbow.out/spy/Ux+0.png" />
+  <figcaption>Figure 5.1.3</figcaption>
+</figure>
 
 
 
@@ -239,3 +256,4 @@ pass
 [^4]: https://github.com/iydon/iPETSc
 [^5]: https://www.semanticscholar.org/paper/PETSc4FOAM%3A-a-library-to-plug-in-PETSc-into-the-Bn%C3%A0-Spisso/0234a490ba9a3647a5ed4f35bee9a70f07cb2e49
 [^6]: https://develop.openfoam.com/modules/external-solver
+[^7]: https://sparse.tamu.edu/
