@@ -4,3 +4,6 @@
 [submodule "part/solution-for-managing-petsc-installations/solver_challenge"]
 	path = part/solution-for-managing-petsc-installations/solver_challenge
 	url = https://gitlab.com/Iydon/solver_challenge
+[submodule "part/hyper-parameter-optimization/training-dataset/foam2mtx"]
+	path = part/hyper-parameter-optimization/training-dataset/foam2mtx
+	url = https://github.com/iydon/foam2mtx
