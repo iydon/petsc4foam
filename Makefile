@@ -17,6 +17,10 @@ test-for-petsc4foam:           ## Test for PETSc4FOAM
 		$(PYTHON) main.py
 
 hyper-parameter-optimization:  ## Hyper-parameter Optimization
-	@cd part/$@/training-dataset && \
+	@cd part/$@/training-dataset/ && \
 		$(PYTHON) -m suite_sparse init && \
 		$(PYTHON) -m suite_sparse spy --shape 512
+	@cd part/$@/training-dataset/foam2mtx/ && \
+		$(PYTHON) script/tutorial.py && \
+		$(PYTHON) script/mtx.py && \
+		$(PYTHON) script/spy.py
