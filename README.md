@@ -28,6 +28,7 @@
       <a href="#hyper-parameter-optimization">Hyper-parameter Optimization</a>
       <ul>
         <li><a href="#training-dataset">Training Dataset</a></li>
+        <li><a href="#hyper-parameter-enumeration">Hyper-parameter Enumeration</a></li>
       </ul>
     </li>
     <li><a href="#references">References</a></li>
@@ -353,6 +354,11 @@ The available training dataset is too small, we come up with an idea to dump spa
 </figure>
 
 
+### Hyper-parameter Enumeration
+
+TODO[^8][^9][^10][^11][^12]
+
+
 
 ## References
 
@@ -363,3 +369,8 @@ The available training dataset is too small, we come up with an idea to dump spa
 [^5]: https://www.semanticscholar.org/paper/PETSc4FOAM%3A-a-library-to-plug-in-PETSc-into-the-Bn%C3%A0-Spisso/0234a490ba9a3647a5ed4f35bee9a70f07cb2e49
 [^6]: https://develop.openfoam.com/modules/external-solver
 [^7]: https://sparse.tamu.edu/
+[^8]: https://petsc.org/release/manualpages/KSP/KSPType/
+[^9]: https://petsc.org/release/manualpages/PC/PCType/
+[^10]: https://petsc.org/release/manual/ksp/
+[^11]: https://petsc.org/release/overview/linear_solve_table/
+[^12]: https://github.com/automl/auto-sklearn
