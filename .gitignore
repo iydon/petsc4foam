@@ -4,4 +4,5 @@ __pycache__/
 # local
 /part/hyper-parameter-optimization/training-dataset/suite_sparse/cache/
 /part/openfoamcom-or-openfoamorg/cache/
-/part/test-for-petsc4foam/cache/
+/part/test-for-petsc4foam/default/cache/
+/part/test-for-petsc4foam/tuning/cache/
