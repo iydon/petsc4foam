@@ -135,8 +135,6 @@ We have provided an example installation of PETSc4FOAM using Docker with the con
 
 ## Test for PETSc4FOAM
 
-<!-- TODO: Select a tutorial to speed up by adjusting the hyper-parameters of the PETSc solving algorithm. -->
-
 We use OpenFOAM-v2106 to test the performance of the PETSc4FOAM implementation. The test set comes from tutorials that can run locally for less than 300 seconds, and is taken in parallel if it can be, otherwise it defaults to serial. The PETSc solving algorithm hyper-parameters are left empty, i.e., the default values are selected. The collapsed table below shows the results of the test set.
 
 <details>
@@ -220,6 +218,114 @@ We can see that in most cases PETSc with the default hyper-parameters does not p
 | compressibleInterIsoFoam | multiphase/compressibleInterIsoFoam/laminar/depthCharge2D  | False       | 67.6197   | 57.8889    | 0.856095   |
 | pisoFoam                 | incompressible/pisoFoam/RAS/cavity                         | True        |  9.86059  |  6.46813   | 0.655958   |
 | dsmcFoam                 | discreteMethods/dsmcFoam/freeSpacePeriodic                 | False       | 33.9859   | 32.2858    | 0.949977   |
+
+Next, we demonstrate the feasibility of tuning PETSc4FOAM via hyper-parameters by optimizing PETSc hyper-parameters to shorten the program runtime, we choose tutorial [multiphaseInterFoam-mixerVessel2D](https://develop.openfoam.com/Development/openfoam/-/tree/OpenFOAM-v2106/tutorials/multiphase/multiphaseInterFoam/laminar/mixerVessel2D), and here are the tuning result:
+
+- Native tutorial: $48.04 \pm 0.45$ seconds
+- PETSc solver with default hyper-parameters: $443.11 \pm 5.91$ seconds
+- PETSc solver with tuned hyper-parameters: $48.03 \pm 0.42$ seconds
+
+<details>
+  <summary>Tuned Hyper-parameters (fvSolution)</summary>
+
+```c++
+solvers {
+    "alpha.*" {
+        nAlphaCorr 4;
+        nAlphaSubCycles 4;
+        cAlpha 1;
+    }
+    "pcorr.*" {
+        solver petsc;
+        tolerance 1e-10;
+        relTol 0;
+        petsc {
+            options {
+                ksp_type bicg;
+                pc_type bjacobi;
+                sub_pc_type ilu;
+            }
+            use_petsc_residual_norm false;
+            monitor_foam_residual_norm false;
+            caching {
+                matrix {
+                    update always;
+                }
+                preconditioner {
+                    update always;
+                }
+            }
+        }
+    }
+    p_rgh {
+        solver petsc;
+        tolerance 1e-07;
+        relTol 0.05;
+        petsc {
+            options {
+                ksp_type cg;
+                pc_type cholesky;
+                sub_pc_type ilu;
+            }
+            use_petsc_residual_norm false;
+            monitor_foam_residual_norm false;
+            caching {
+                matrix {
+                    update always;
+                }
+                preconditioner {
+                    update always;
+                }
+            }
+        }
+    }
+    p_rghFinal {
+        solver petsc;
+        tolerance 1e-07;
+        relTol 0;
+        petsc {
+            options {
+                ksp_type bicg;
+                pc_type bjacobi;
+                sub_pc_type ilu;
+            }
+            use_petsc_residual_norm false;
+            monitor_foam_residual_norm false;
+            caching {
+                matrix {
+                    update always;
+                }
+                preconditioner {
+                    update always;
+                }
+            }
+        }
+    }
+    "(U|T).*" {
+        solver petsc;
+        tolerance 1e-08;
+        relTol 0;
+        petsc {
+            options {
+                ksp_type cg;
+                pc_type bjacobi;
+                sub_pc_type ilu;
+            }
+            use_petsc_residual_norm false;
+            monitor_foam_residual_norm false;
+            caching {
+                matrix {
+                    update always;
+                }
+                preconditioner {
+                    update always;
+                }
+            }
+        }
+    }
+}
+```
+</details>
 
 
 
