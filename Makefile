@@ -13,7 +13,9 @@ openfoamcom-or-openfoamorg:    ## OpenFOAM.com or OpenFOAM.org
 		$(MAKE)
 
 test-for-petsc4foam:           ## Test for PETSc4FOAM
-	@cd part/$@/ && \
+	@cd part/$@/default/ && \
+		$(PYTHON) main.py
+	@cd part/$@/tuning/ && \
 		$(PYTHON) main.py
 
 hyper-parameter-optimization:  ## Hyper-parameter Optimization

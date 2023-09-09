@@ -1,0 +1,121 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2106                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile {
+    version 2.0;
+    format ascii;
+    class dictionary;
+    object fvSolution;
+}
+
+solvers {
+    "alpha.*" {
+        nAlphaCorr 4;
+        nAlphaSubCycles 4;
+        cAlpha 1;
+    }
+    "pcorr.*" {
+        solver petsc;
+        tolerance 1e-10;
+        relTol 0;
+        petsc {
+            options {
+                ksp_type bicg;
+                pc_type bjacobi;
+                sub_pc_type ilu;
+            }
+            use_petsc_residual_norm false;
+            monitor_foam_residual_norm false;
+            caching {
+                matrix {
+                    update always;
+                }
+                preconditioner {
+                    update always;
+                }
+            }
+        }
+    }
+    p_rgh {
+        solver petsc;
+        tolerance 1e-07;
+        relTol 0.05;
+        petsc {
+            options {
+                ksp_type cg;
+                pc_type cholesky;
+                sub_pc_type ilu;
+            }
+            use_petsc_residual_norm false;
+            monitor_foam_residual_norm false;
+            caching {
+                matrix {
+                    update always;
+                }
+                preconditioner {
+                    update always;
+                }
+            }
+        }
+    }
+    p_rghFinal {
+        solver petsc;
+        tolerance 1e-07;
+        relTol 0;
+        petsc {
+            options {
+                ksp_type bicg;
+                pc_type bjacobi;
+                sub_pc_type ilu;
+            }
+            use_petsc_residual_norm false;
+            monitor_foam_residual_norm false;
+            caching {
+                matrix {
+                    update always;
+                }
+                preconditioner {
+                    update always;
+                }
+            }
+        }
+    }
+    "(U|T).*" {
+        solver petsc;
+        tolerance 1e-08;
+        relTol 0;
+        petsc {
+            options {
+                ksp_type cg;
+                pc_type bjacobi;
+                sub_pc_type ilu;
+            }
+            use_petsc_residual_norm false;
+            monitor_foam_residual_norm false;
+            caching {
+                matrix {
+                    update always;
+                }
+                preconditioner {
+                    update always;
+                }
+            }
+        }
+    }
+}
+PIMPLE {
+    momentumPredictor no;
+    nCorrectors 4;
+    nNonOrthogonalCorrectors 0;
+    pRefCell 0;
+    pRefValue 0;
+}
+relaxationFactors {
+    equations {
+        ".*" 1;
+    }
+}
