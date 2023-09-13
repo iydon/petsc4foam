@@ -75,12 +75,13 @@ class Tutorial:
         self._fd(f'{self._psc} -entry startFrom -set startTime')
         return self
 
-    def hook_petsc(self) -> te.Self:
+    def hook_petsc(self, options: t.Dict[str, str] = {}) -> te.Self:
         # faSolution, fvSolution
+        petsc = ' '.join(f'{key} {val};' for key, val in options.items())
         for path in filter(p.Path.exists, [self._psfv, self._psfa]):
             for key in self._fd(f'{path} -entry solvers -keywords').splitlines():
                 self._fd(f'{path} -entry solvers/{key}/solver -set petsc')
-                self._fd(f'{path} -entry solvers/{key}/petsc -set {{}}')
+                self._fd(f'{path} -entry solvers/{key}/petsc -set "{{ options {{ {petsc} }} }}"')
                 self._fd(f'{path} -entry solvers/{key}/preconditioner -remove')
         # controlDict
         self._fd(f'{self._psc} -entry libs -set "(petscFoam)"')
@@ -166,7 +167,11 @@ class TSV:
             self._append(columns)
 
     def __contains__(self, key: str) -> bool:
-        return str(key) in self._path.read_text()
+        with open(self._path, 'r') as f:
+            for line in f:
+                if key in line.strip().split('\t'):
+                    return True
+        return False
 
     def append(self, *parts: str) -> None:
         self._append(parts)
@@ -181,12 +186,12 @@ if __name__ == '__main__':
 
     timeout_foam, timeout_petsc = 300.0, 1800.0
     cache = p.Path(__file__).parent / 'cache'
-    tsv = TSV('petsc4foam.tsv', ['tutorial', 'application', 'is_parallel', 'time_foam', 'time_petsc'])
+    tsv = TSV('petsc4foam.tsv', ['tutorial', 'application', 'parallel', 'time_foam', 'time_petsc'])
 
     for old in tqdm.tqdm(Tutorial.iterValids(), total=150):
         # init
         new = old.copy(cache).hook_foam()
-        keys = new.directory.relative_to(cache), new.application, new.is_parallel
+        keys = new.directory.relative_to(cache).as_posix(), new.application, new.number_of_subdomains
         if keys[0] in tsv:
             continue
         if not new.all_run_or_parallel(timeout=timeout_foam, delete=True):
@@ -199,7 +204,7 @@ if __name__ == '__main__':
             continue
         # petsc
         time_petsc = new \
-            .hook_petsc() \
+            .hook_petsc(options={'ksp_type': 'cg', 'pc_type': 'jacobi'}) \
             .run_or_parallel_timer(timeout=timeout_petsc, delete=True)
         if time_petsc is None:
             tsv.append(*keys, time_foam, -timeout_petsc)
