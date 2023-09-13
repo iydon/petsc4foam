@@ -9,16 +9,15 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "~3.9"
 
-
 [tool.poetry.group.openfoamcom-or-openfoamorg.dependencies]
 matplotlib = "^3.7.2"
 seaborn = "^0.12.2"
 
-
 [tool.poetry.group.test-for-petsc4foam.dependencies]
+pandas = "^2.1.0"
+tabulate = "^0.9.0"
 tqdm = "^4.66.1"
 typing-extensions = "^4.7.1"
-
 
 [tool.poetry.group.hyper-parameter-optimization.dependencies]
 beautifulsoup4 = "^4.12.2"
